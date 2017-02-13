@@ -45,11 +45,13 @@ var moduleReader = {
       var licenses = packagejson.licenses;
       if (Array.isArray(licenses) && licenses[0].type) {
         license = licenses[0].type;
-        this.errors.push(
-          this.errorMessages['multiple-license-ambiguity']
-          .replace('{0}', mod)
-          .replace('{1}', license)
-        );
+        if (licenses.length > 1) {
+          this.errors.push(
+            this.errorMessages['multiple-license-ambiguity']
+            .replace('{0}', mod)
+            .replace('{1}', license)
+          );
+        }
       }
     }
     return license;
